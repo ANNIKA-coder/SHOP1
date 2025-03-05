@@ -15,24 +15,45 @@
             padding: 20px;
             border-radius: 10px;
             color: white;
-            font-size: 40px; /* 文字大小設為更大 */
+            font-size: 40px;
             text-align: center;
             z-index: 1000;
         }
         .popup-message.show {
             display: block;
         }
+        #map {
+            height: 400px;
+            width: 100%;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="popup-message" id="popupMessage">歡迎來到農村好店</div>
+    <div id="map"></div>
 
     <script>
         window.onload = function() {
             setTimeout(function() {
                 document.getElementById('popupMessage').classList.add('show');
-            }, 1000); // 延遲 1 秒顯示彈出訊息
+            }, 1000);
+
+            setTimeout(function() {
+                document.getElementById('popupMessage').classList.remove('show');
+                document.getElementById('map').style.display = 'block';
+                initMap(); // Initialize Google Map
+            }, 3000); // 3 seconds after pop-up, show Google Map
+        };
+
+        function initMap() {
+            const mapOptions = {
+                center: { lat: 25.0330, lng: 121.5654 }, // Example coordinates, change to your desired location
+                zoom: 15
+            };
+            const map = new google.maps.Map(document.getElementById("map"), mapOptions);
         }
     </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
 </body>
 </html>
