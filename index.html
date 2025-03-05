@@ -3,57 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>農村好店</title>
+    <title>Google 地圖訪客計數</title>
     <style>
-        .popup-message {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            color: white;
-            font-size: 40px;
+        body {
+            font-family: Arial, sans-serif;
             text-align: center;
-            z-index: 1000;
+            margin: 20px;
         }
-        .popup-message.show {
-            display: block;
-        }
-        #map {
-            height: 400px;
-            width: 100%;
+        #counter-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
             display: none;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
         }
     </style>
 </head>
 <body>
-    <div class="popup-message" id="popupMessage">歡迎來到農村好店</div>
-    <div id="map"></div>
+
+    <!-- 訪客計數的彈跳訊息 -->
+    <div id="counter-box"></div>
+
+    <!-- 嵌入 Google 我的地圖 -->
+    <iframe src="https://www.google.com/maps/d/embed?mid=1ZhP5fLsZ-gwX5ZI3-zEgaHHxD79_1UA&ehbc=2E312F"></iframe>
 
     <script>
-        window.onload = function() {
-            setTimeout(function() {
-                document.getElementById('popupMessage').classList.add('show');
-            }, 1000);
+        // 訪問計數的儲存 key
+        const visitKey = "page_visit_count";
 
-            setTimeout(function() {
-                document.getElementById('popupMessage').classList.remove('show');
-                document.getElementById('map').style.display = 'block';
-                initMap(); // Initialize Google Map
-            }, 3000); // 3 seconds after pop-up, show Google Map
-        };
+        // 取得目前的計數
+        let visitCount = localStorage.getItem(visitKey);
 
-        function initMap() {
-            const mapOptions = {
-                center: { lat: 25.0330, lng: 121.5654 }, // Example coordinates, change to your desired location
-                zoom: 15
-            };
-            const map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        if (!visitCount) {
+            visitCount = 1;
+        } else {
+            visitCount = parseInt(visitCount) + 1;
         }
+
+        // 存回 localStorage
+        localStorage.setItem(visitKey, visitCount);
+
+        // 顯示彈跳訊息
+        document.getElementById("counter-box").innerText = `歡迎來到農村好店！`;
+        document.getElementById("counter-box").style.display = "block";
+
+        // 3 秒後隱藏訊息
+        setTimeout(() => {
+            document.getElementById("counter-box").style.display = "none";
+        }, 3000);
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
+
 </body>
 </html>
