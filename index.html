@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>訪客計數地圖</title>
+</head>
+<body>
+
+    <h1>歡迎來到專屬地圖</h1>
+    <iframe src="https://www.google.com/maps/d/u/0/viewer?mid=1ZhP5fLsZ-gwX5ZI3-zEgaHHxD79_1UA&ll=24.97049800000001%2C121.601604&z=10" width="100%" height="600" style="border:0;"></iframe>
+
+    <script>
+        if (!localStorage.getItem("visitorCount")) {
+            localStorage.setItem("visitorCount", "1");
+        } else {
+            let count = parseInt(localStorage.getItem("visitorCount"), 10);
+            count++;
+            localStorage.setItem("visitorCount", count.toString());
+        }
+
+        let visitorNumber = localStorage.getItem("visitorCount");
+        alert(`你是第 ${visitorNumber} 個進入網頁的人！`);
+    </script>
+
+</body>
+</html>
