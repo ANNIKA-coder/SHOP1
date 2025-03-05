@@ -3,63 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google 地圖訪客計數</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-        #counter-box {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 10px;
-            display: none;
-        }
-        iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
-        }
-    </style>
+    <title>訪客計數</title>
 </head>
 <body>
 
-    <!-- 訪客計數的彈跳訊息 -->
-    <div id="counter-box"></div>
-
-    <!-- 嵌入 Google 我的地圖 -->
-    <iframe src="https://www.google.com/maps/d/embed?mid=1ZhP5fLsZ-gwX5ZI3-zEgaHHxD79_1UA&ehbc=2E312F"></iframe>
+    <h1>歡迎來到地圖頁面</h1>
+    <iframe src="https://www.google.com/maps/d/u/0/viewer?mid=1ZhP5fLsZ-gwX5ZI3-zEgaHHxD79_1UA&ll=24.97049800000001%2C121.601604&z=10" width="800" height="600"></iframe>
 
     <script>
-        // 訪問計數的儲存 key
-        const visitKey = "page_visit_count";
-
-        // 取得目前的計數
-        let visitCount = localStorage.getItem(visitKey);
-
-        if (!visitCount) {
-            visitCount = 1;
+        if (!localStorage.getItem("visitorCount")) {
+            localStorage.setItem("visitorCount", "1");
         } else {
-            visitCount = parseInt(visitCount) + 1;
+            let count = parseInt(localStorage.getItem("visitorCount"), 10);
+            count++;
+            localStorage.setItem("visitorCount", count.toString());
         }
 
-        // 存回 localStorage
-        localStorage.setItem(visitKey, visitCount);
-
-        // 顯示彈跳訊息
-        document.getElementById("counter-box").innerText = `歡迎來到農村好店！`;
-        document.getElementById("counter-box").style.display = "block";
-
-        // 3 秒後隱藏訊息
-        setTimeout(() => {
-            document.getElementById("counter-box").style.display = "none";
-        }, 3000);
+        let visitorNumber = localStorage.getItem("visitorCount");
+        alert("歡迎來到農村好店!");
     </script>
 
 </body>
